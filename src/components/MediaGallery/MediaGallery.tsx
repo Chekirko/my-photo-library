@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { Plus, X, Save } from "lucide-react";
 import { CldImage } from "next-cloudinary";
+import { CloudinaryResource } from "@/types/cloudinary";
+import { useResources } from "@/hooks/use-resources";
 
 import Container from "@/components/Container";
 import { Button } from "@/components/ui/button";
@@ -23,18 +25,13 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 
-interface CloudinaryResource {
-  width: number;
-  height: number;
-  public_id: string;
-  secure_url: string;
-}
-
 interface MediaGalleryProps {
   resources: Array<CloudinaryResource>;
 }
 
-const MediaGallery = ({ resources }: MediaGalleryProps) => {
+const MediaGallery = ({ resources: initialResources }: MediaGalleryProps) => {
+  const { resources } = useResources({ initialResources });
+
   const [selected, setSelected] = useState<Array<string>>([]);
   const [creation, setCreation] = useState();
 
